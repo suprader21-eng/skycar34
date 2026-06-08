@@ -7,23 +7,41 @@ export default function MultimediaPage() {
       <Navbar />
 
       {/* HERO */}
-      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[560px] flex items-center overflow-hidden">
         <div className="absolute inset-0 bg-[#030610]">
-          {/* Grille tech */}
           <div className="absolute inset-0 opacity-[0.04]"
             style={{ backgroundImage: 'linear-gradient(#C9A84C 1px,transparent 1px),linear-gradient(90deg,#C9A84C 1px,transparent 1px)', backgroundSize: '80px 80px' }} />
-          {/* Lueur centrale */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_55%_45%,_rgba(80,120,255,0.12)_0%,_transparent_55%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_45%_55%,_rgba(201,168,76,0.06)_0%,_transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_65%_50%,_rgba(80,120,255,0.12)_0%,_transparent_55%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_60%_50%,_rgba(201,168,76,0.06)_0%,_transparent_50%)]" />
+        </div>
+        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#02020a] to-transparent" />
 
-          {/* Écran central */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-24 flex flex-col md:flex-row items-center gap-12 md:gap-16">
+          {/* Texte */}
+          <div className="flex-1 text-left">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-8 h-px bg-gradient-to-r from-transparent to-gold/60" />
+              <span className="text-gold text-[10px] tracking-[0.5em] uppercase">Service Premium</span>
+            </div>
+            <h1 className="font-cinzel text-5xl md:text-6xl font-bold tracking-wider mb-6">
+              <span className="text-white">Intégration</span><br />
+              <span className="text-gold drop-shadow-[0_0_25px_rgba(201,168,76,0.4)]">Multimédia</span>
+            </h1>
+            <p className="text-[#555] text-sm leading-relaxed mb-8 max-w-sm">
+              Écran HD tactile · Apple CarPlay & Android Auto · Câblage invisible
+            </p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 border border-gold/25 bg-gold/5 rounded-sm">
+              <div className="w-1.5 h-1.5 rounded-full bg-gold shadow-[0_0_6px_#C9A84C] animate-pulse" />
+              <span className="text-gold text-[10px] font-cinzel tracking-[0.3em] uppercase">Offre de lancement — 20% de remise</span>
+            </div>
+          </div>
+
+          {/* Visuel écran */}
+          <div className="flex-1 flex justify-center">
             <div className="relative">
-              {/* Halo */}
               <div className="absolute -inset-8 bg-[radial-gradient(circle,_rgba(201,168,76,0.08)_0%,_transparent_70%)] rounded-full" />
-              {/* Écran */}
-              <div className="w-80 h-52 md:w-96 md:h-60 rounded-2xl border border-gold/25 bg-[#040915] shadow-[0_0_80px_rgba(201,168,76,0.08),inset_0_1px_0_rgba(255,255,255,0.05)] overflow-hidden relative">
-                {/* Barre de statut */}
+              <div className="w-80 h-52 md:w-96 md:h-60 rounded-2xl border border-gold/25 bg-[#040915] overflow-hidden relative"
+                style={{ boxShadow: '0 0 80px rgba(201,168,76,0.08), inset 0 1px 0 rgba(255,255,255,0.05)' }}>
                 <div className="flex items-center justify-between px-4 py-2 border-b border-white/5">
                   <div className="flex gap-1.5">
                     <div className="w-2 h-2 rounded-full bg-red-500/60" />
@@ -35,7 +53,6 @@ export default function MultimediaPage() {
                     {[...Array(3)].map((_, i) => <div key={i} className="w-1 h-1 rounded-full bg-white/20" />)}
                   </div>
                 </div>
-                {/* Interface */}
                 <div className="p-4 grid grid-cols-4 gap-2.5">
                   {[
                     { label: 'Musique', color: 'from-purple-500/30', icon: '♪' },
@@ -53,32 +70,13 @@ export default function MultimediaPage() {
                     </div>
                   ))}
                 </div>
-                {/* Barre du bas */}
                 <div className="absolute bottom-0 inset-x-0 h-8 bg-gradient-to-t from-black/40 to-transparent flex items-center justify-center">
                   <div className="w-24 h-1 rounded-full bg-white/20" />
                 </div>
               </div>
-              {/* Pied écran */}
               <div className="w-14 h-2 bg-gradient-to-b from-gold/20 to-transparent mx-auto border-x border-gold/10" />
               <div className="w-24 h-1 bg-gold/10 mx-auto rounded-full" />
             </div>
-          </div>
-        </div>
-        <div className="absolute bottom-0 inset-x-0 h-56 bg-gradient-to-t from-[#02020a] to-transparent" />
-
-        <div className="relative z-10 text-center px-4">
-          <div className="flex items-center justify-center gap-3 mb-5">
-            <div className="w-8 h-px bg-gradient-to-r from-transparent to-gold/60" />
-            <span className="text-gold text-[10px] tracking-[0.5em] uppercase">Service Premium</span>
-            <div className="w-8 h-px bg-gradient-to-l from-transparent to-gold/60" />
-          </div>
-          <h1 className="font-cinzel text-5xl md:text-6xl font-bold tracking-wider">
-            <span className="text-white">Intégration</span><br />
-            <span className="text-gold drop-shadow-[0_0_25px_rgba(201,168,76,0.4)]">Multimédia</span>
-          </h1>
-          <div className="inline-flex items-center gap-2 px-4 py-2 border border-gold/25 bg-gold/5 mt-6 rounded-sm">
-            <div className="w-1.5 h-1.5 rounded-full bg-gold shadow-[0_0_6px_#C9A84C] animate-pulse" />
-            <span className="text-gold text-[10px] font-cinzel tracking-[0.3em] uppercase">Offre de lancement — 20% de remise</span>
           </div>
         </div>
       </section>

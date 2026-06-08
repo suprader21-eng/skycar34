@@ -7,66 +7,61 @@ export default function LedPage() {
       <Navbar />
 
       {/* HERO */}
-      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[560px] flex items-center overflow-hidden">
         <div className="absolute inset-0 bg-[#02020a]">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(201,168,76,0.07)_0%,_transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_65%_50%,_rgba(201,168,76,0.08)_0%,_transparent_60%)]" />
+        </div>
+        <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-[#02020a] to-transparent" />
 
-          {/* Habitacle LED animé */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            <div className="relative w-80 h-48 md:w-96 md:h-56">
-              {/* Contour habitacle */}
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-24 flex flex-col md:flex-row items-center gap-12 md:gap-16">
+          {/* Texte */}
+          <div className="flex-1 text-left">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-8 h-px bg-gradient-to-r from-transparent to-gold/60" />
+              <span className="text-gold text-[10px] tracking-[0.5em] uppercase">Service Premium</span>
+            </div>
+            <h1 className="font-cinzel text-5xl md:text-6xl font-bold tracking-wider mb-6">
+              <span className="text-white">Installation</span><br />
+              <span className="text-gold drop-shadow-[0_0_25px_rgba(201,168,76,0.5)]">LED Complète</span>
+            </h1>
+            <p className="text-[#555] text-sm leading-relaxed mb-8 max-w-sm">
+              Footwell · Sièges · Console · Portières — Ambiance sur mesure, luminosité réglable
+            </p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 border border-gold/25 bg-gold/5 rounded-sm">
+              <div className="w-1.5 h-1.5 rounded-full bg-gold shadow-[0_0_6px_#C9A84C] animate-pulse" />
+              <span className="text-gold text-[10px] font-cinzel tracking-[0.3em] uppercase">Câblage 100% invisible</span>
+            </div>
+          </div>
+
+          {/* Visuel habitacle LED */}
+          <div className="flex-1 flex justify-center">
+            <div className="relative w-80 h-52 md:w-96 md:h-60">
               <div className="absolute inset-0 border border-white/5 rounded-3xl"
-                style={{ background: 'linear-gradient(160deg,#0e0d0a 0%,#080806 60%,#050504 100%)' }}>
-
-                {/* Bandeau footwell bas */}
-                <div className="absolute bottom-0 left-6 right-6 h-0.5 rounded-full bg-gradient-to-r from-transparent via-gold to-transparent shadow-[0_0_12px_rgba(201,168,76,0.8),0_0_25px_rgba(201,168,76,0.3)]" />
-
-                {/* Bandeau footwell gauche */}
-                <div className="absolute left-0 top-8 bottom-4 w-0.5 rounded-full bg-gradient-to-b from-transparent via-gold/70 to-transparent shadow-[0_0_8px_rgba(201,168,76,0.6)]" />
-
-                {/* Bandeau footwell droit */}
-                <div className="absolute right-0 top-8 bottom-4 w-0.5 rounded-full bg-gradient-to-b from-transparent via-gold/70 to-transparent shadow-[0_0_8px_rgba(201,168,76,0.6)]" />
-
-                {/* Console centrale */}
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-20 h-0.5 rounded-full bg-gold/60 shadow-[0_0_10px_rgba(201,168,76,0.7)]" />
-
-                {/* Siège gauche */}
-                <div className="absolute left-8 top-10 w-14 h-20 border border-white/8 rounded-xl bg-white/2 flex items-center justify-center">
-                  <div className="w-10 h-12 border border-white/5 rounded-lg bg-white/2 relative overflow-hidden">
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold/50 to-transparent shadow-[0_0_6px_rgba(201,168,76,0.5)]" />
-                    <div className="absolute left-0 top-2 bottom-1 w-0.5 bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
-                    <div className="absolute right-0 top-2 bottom-1 w-0.5 bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
+                style={{ background: 'linear-gradient(160deg,#0e0d0a 0%,#080806 60%,#050504 100%)', boxShadow: '0 0 60px rgba(201,168,76,0.05)' }}>
+                <div className="absolute bottom-0 left-6 right-6 h-0.5 rounded-full bg-gradient-to-r from-transparent via-gold to-transparent"
+                  style={{ boxShadow: '0 0 12px rgba(201,168,76,0.8), 0 0 25px rgba(201,168,76,0.3)' }} />
+                <div className="absolute left-0 top-8 bottom-4 w-0.5 rounded-full bg-gradient-to-b from-transparent via-gold/70 to-transparent"
+                  style={{ boxShadow: '0 0 8px rgba(201,168,76,0.6)' }} />
+                <div className="absolute right-0 top-8 bottom-4 w-0.5 rounded-full bg-gradient-to-b from-transparent via-gold/70 to-transparent"
+                  style={{ boxShadow: '0 0 8px rgba(201,168,76,0.6)' }} />
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-20 h-0.5 rounded-full bg-gold/60"
+                  style={{ boxShadow: '0 0 10px rgba(201,168,76,0.7)' }} />
+                {[{ side: 'left-8' }, { side: 'right-8' }].map((s, idx) => (
+                  <div key={idx} className={`absolute ${s.side} top-10 w-14 h-20 border border-white/10 rounded-xl flex items-center justify-center`}
+                    style={{ background: 'rgba(255,255,255,0.02)' }}>
+                    <div className="w-10 h-12 border border-white/5 rounded-lg relative overflow-hidden"
+                      style={{ background: 'rgba(255,255,255,0.02)' }}>
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold/50 to-transparent"
+                        style={{ boxShadow: '0 0 6px rgba(201,168,76,0.5)' }} />
+                      <div className="absolute left-0 top-2 bottom-1 w-0.5 bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
+                      <div className="absolute right-0 top-2 bottom-1 w-0.5 bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
+                    </div>
                   </div>
-                </div>
-
-                {/* Siège droit */}
-                <div className="absolute right-8 top-10 w-14 h-20 border border-white/8 rounded-xl bg-white/2 flex items-center justify-center">
-                  <div className="w-10 h-12 border border-white/5 rounded-lg bg-white/2 relative overflow-hidden">
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-gold/50 to-transparent shadow-[0_0_6px_rgba(201,168,76,0.5)]" />
-                    <div className="absolute left-0 top-2 bottom-1 w-0.5 bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
-                    <div className="absolute right-0 top-2 bottom-1 w-0.5 bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
-                  </div>
-                </div>
-
-                {/* Reflet sol LED */}
-                <div className="absolute bottom-0 left-1/4 right-1/4 h-3 bg-gold/5 blur-md rounded-full" />
+                ))}
+                <div className="absolute bottom-0 left-1/4 right-1/4 h-3 blur-md rounded-full" style={{ background: 'rgba(201,168,76,0.05)' }} />
               </div>
             </div>
           </div>
-        </div>
-        <div className="absolute bottom-0 inset-x-0 h-56 bg-gradient-to-t from-[#02020a] to-transparent" />
-
-        <div className="relative z-10 text-center px-4">
-          <div className="flex items-center justify-center gap-3 mb-5">
-            <div className="w-8 h-px bg-gradient-to-r from-transparent to-gold/60" />
-            <span className="text-gold text-[10px] tracking-[0.5em] uppercase">Service Premium</span>
-            <div className="w-8 h-px bg-gradient-to-l from-transparent to-gold/60" />
-          </div>
-          <h1 className="font-cinzel text-5xl md:text-6xl font-bold tracking-wider">
-            <span className="text-white">Installation</span><br />
-            <span className="text-gold drop-shadow-[0_0_25px_rgba(201,168,76,0.5)]">LED Complète</span>
-          </h1>
-          <p className="text-[#666] text-sm tracking-widest mt-3">Ambiance sur mesure · Luminosité réglable</p>
         </div>
       </section>
 
