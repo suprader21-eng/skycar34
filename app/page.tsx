@@ -12,28 +12,32 @@ const servicePages: Record<string, { href: string; visual: React.ReactNode; tagl
     href: '/services/ciel-etoile',
     tagline: 'De 200 à 1000 étoiles LED',
     visual: (
-      <div className="relative w-full h-full bg-[#02020f] overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(201,168,76,0.15)_0%,_transparent_65%)]" />
+      <div className="relative w-full h-full bg-[#01010a] overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(201,168,76,0.1)_0%,_transparent_65%)]" />
+        {/* Étoiles fixes */}
+        {[
+          [15,20],[28,65],[42,35],[55,80],[68,15],[80,55],[90,30],[10,75],[35,50],[72,70],
+          [50,10],[20,45],[60,90],[85,20],[45,60],[25,85],[70,40],[38,25],[62,75],[18,55],
+          [82,65],[48,85],[32,40],[75,25],[55,50],[12,35],[66,10],[40,70],[78,80],[22,15],
+        ].map(([top, left], i) => (
+          <div key={i} className="absolute rounded-full bg-white"
+            style={{
+              top: `${top}%`, left: `${left}%`,
+              width: i % 5 === 0 ? '2px' : '1px',
+              height: i % 5 === 0 ? '2px' : '1px',
+              opacity: 0.4 + (i % 4) * 0.15,
+              boxShadow: i % 5 === 0 ? '0 0 4px rgba(255,255,255,0.8)' : 'none',
+            }}
+          />
+        ))}
+        {/* LED centrale */}
         <div className="absolute inset-0 flex items-center justify-center">
-          {[...Array(80)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full bg-white"
-              style={{
-                width: `${Math.random() * 2 + 1}px`,
-                height: `${Math.random() * 2 + 1}px`,
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                opacity: Math.random() * 0.8 + 0.2,
-                boxShadow: `0 0 ${Math.random() * 4 + 2}px rgba(255,255,255,0.8)`,
-              }}
-            />
-          ))}
-        </div>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-16 h-16 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center">
-            <div className="w-8 h-8 rounded-full bg-gold/30 border border-gold/50 flex items-center justify-center">
-              <div className="w-3 h-3 rounded-full bg-gold shadow-[0_0_12px_#C9A84C]" />
+          <div className="relative">
+            <div className="absolute -inset-6 bg-[radial-gradient(circle,_rgba(201,168,76,0.15)_0%,_transparent_70%)] rounded-full" />
+            <div className="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center">
+              <div className="w-6 h-6 rounded-full border border-gold/50 flex items-center justify-center bg-gold/10">
+                <div className="w-2.5 h-2.5 rounded-full bg-gold shadow-[0_0_10px_#C9A84C,0_0_20px_rgba(201,168,76,0.5)]" />
+              </div>
             </div>
           </div>
         </div>
@@ -42,19 +46,26 @@ const servicePages: Record<string, { href: string; visual: React.ReactNode; tagl
   },
   'Intégration multimédia': {
     href: '/services/multimedia',
-    tagline: 'Écran HD • iOS & Android',
+    tagline: 'Écran HD • CarPlay & Android',
     visual: (
-      <div className="relative w-full h-full bg-[#050810] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_60%_40%,_rgba(100,150,255,0.1)_0%,_transparent_60%)]" />
-        <div className="border-2 border-[#C9A84C]/40 rounded-lg w-36 h-24 relative flex items-center justify-center shadow-[0_0_30px_rgba(201,168,76,0.15)]">
-          <div className="absolute inset-1 rounded bg-[#0a1020] flex items-center justify-center">
-            <div className="grid grid-cols-3 gap-1">
-              {[...Array(9)].map((_, i) => (
-                <div key={i} className={`w-3 h-3 rounded-sm ${i === 4 ? 'bg-gold/60' : 'bg-white/10'}`} />
+      <div className="relative w-full h-full bg-[#040812] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_55%_40%,_rgba(80,120,255,0.1)_0%,_transparent_60%)]" />
+        <div className="absolute inset-0 opacity-[0.03]"
+          style={{ backgroundImage: 'linear-gradient(#C9A84C 1px,transparent 1px),linear-gradient(90deg,#C9A84C 1px,transparent 1px)', backgroundSize: '30px 30px' }} />
+        <div className="relative">
+          <div className="w-44 h-28 rounded-xl border border-gold/20 bg-[#040915] shadow-[0_0_40px_rgba(201,168,76,0.06)] overflow-hidden">
+            <div className="flex items-center justify-between px-3 py-1.5 border-b border-white/5">
+              <div className="flex gap-1">{[0,1,2].map(i=><div key={i} className="w-1.5 h-1.5 rounded-full bg-white/10"/>)}</div>
+              <div className="w-12 h-1 rounded-full bg-white/10" />
+            </div>
+            <div className="p-2 grid grid-cols-4 gap-1.5">
+              {['♪','◎','☎','⌘','◐','◈','▶','⚙'].map((ic,i)=>(
+                <div key={i} className={`rounded-lg flex items-center justify-center h-7 text-xs ${i===0?'bg-gold/20 text-gold':'bg-white/5 text-white/30'}`}>{ic}</div>
               ))}
             </div>
           </div>
-          <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-6 h-2 bg-[#C9A84C]/30 border-t-0 border border-[#C9A84C]/20 rounded-b" />
+          <div className="w-10 h-1.5 bg-gold/15 mx-auto rounded-b" />
+          <div className="w-16 h-0.5 bg-gold/8 mx-auto rounded-full" />
         </div>
       </div>
     ),
@@ -63,13 +74,21 @@ const servicePages: Record<string, { href: string; visual: React.ReactNode; tagl
     href: '/services/phares',
     tagline: 'Nano UV 9H • Cristallin',
     visual: (
-      <div className="relative w-full h-full bg-[#04040a] flex items-center justify-center overflow-hidden">
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1">
-          <div className="absolute w-40 h-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,_rgba(201,168,76,0.5)_0%,_rgba(201,168,76,0.1)_30%,_transparent_70%)]" />
-          <div className="absolute -translate-x-1/2 -translate-y-1/2 w-72 h-20 origin-left bg-[linear-gradient(to_right,_rgba(201,168,76,0.15),_transparent)] -rotate-12 blur-sm" />
-          <div className="absolute -translate-x-1/2 -translate-y-1/2 w-72 h-20 origin-left bg-[linear-gradient(to_right,_rgba(201,168,76,0.1),_transparent)] rotate-12 blur-sm" />
+      <div className="relative w-full h-full bg-[#040401] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(201,168,76,0.06)_0%,_transparent_60%)]" />
+        <div className="flex gap-14 items-center">
+          {[0,1].map((i) => (
+            <div key={i} className="relative flex items-center justify-center">
+              <div className="absolute w-20 h-20 rounded-full bg-[radial-gradient(circle,_rgba(201,168,76,0.12)_0%,_transparent_70%)]" />
+              <div className="w-11 h-11 rounded-full border border-gold/20 flex items-center justify-center shadow-[0_0_25px_rgba(201,168,76,0.12)]">
+                <div className="w-7 h-7 rounded-full border border-gold/35 flex items-center justify-center bg-gold/5">
+                  <div className="w-3 h-3 rounded-full bg-gold shadow-[0_0_12px_rgba(201,168,76,0.9),0_0_25px_rgba(201,168,76,0.4)]" />
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="relative w-10 h-10 rounded-full border border-gold/50 bg-gold/10 shadow-[0_0_30px_rgba(201,168,76,0.6),inset_0_0_15px_rgba(201,168,76,0.2)]" />
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-32 h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
       </div>
     ),
   },
@@ -77,35 +96,19 @@ const servicePages: Record<string, { href: string; visual: React.ReactNode; tagl
     href: '/services/plastiques',
     tagline: 'Nano céramique • Protection UV',
     visual: (
-      <div className="relative w-full h-full bg-[#050505] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(201,168,76,0.05)_0%,_transparent_70%)]" />
-        <div className="relative w-28 h-20 border border-gold/20 rounded bg-gradient-to-b from-[#1a1a1a] to-[#0a0a0a] flex flex-col items-center justify-center gap-2 shadow-[inset_0_1px_0_rgba(201,168,76,0.1)]">
-          <div className="w-20 h-1 rounded-full bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
-          <div className="w-16 h-1 rounded-full bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
-          <div className="w-20 h-1 rounded-full bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
-          <div className="absolute top-1 right-2 w-5 h-5 rounded-full border border-gold/30 bg-gold/5" />
-        </div>
-      </div>
-    ),
-  },
-  'Pack complet intérieur': {
-    href: '/services/pack-complet',
-    tagline: 'Plastiques + Phares • Tout inclus',
-    visual: (
-      <div className="relative w-full h-full bg-[#02020a] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_50%,_rgba(201,168,76,0.08)_0%,_transparent_50%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_50%,_rgba(100,150,255,0.05)_0%,_transparent_50%)]" />
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full border border-gold/40 bg-gold/10 shadow-[0_0_20px_rgba(201,168,76,0.4)]" />
-          <div className="w-12 h-8 border border-gold/30 rounded bg-[#0a0a15] flex items-center justify-center">
-            <div className="w-6 h-4 border border-gold/20 rounded bg-gold/5" />
+      <div className="relative w-full h-full bg-[#060503] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_40%_50%,_rgba(201,168,76,0.06)_0%,_transparent_60%)]" />
+        <div className="relative w-36 h-24 rounded-xl border border-gold/15 overflow-hidden shadow-[0_0_30px_rgba(201,168,76,0.05)]"
+          style={{ background: 'linear-gradient(135deg,#1c1a12 0%,#0f0e0a 60%,#0a0a08 100%)' }}>
+          <div className="absolute top-6 left-4 right-4 h-px bg-gradient-to-r from-transparent via-gold/25 to-transparent" />
+          <div className="absolute top-7 left-4 right-4 bottom-6 opacity-15"
+            style={{ background: 'repeating-linear-gradient(135deg,#3a3520 0,#3a3520 1px,transparent 1px,transparent 5px),repeating-linear-gradient(45deg,#3a3520 0,#3a3520 1px,transparent 1px,transparent 5px)' }} />
+          <div className="absolute bottom-6 left-4 right-4 h-px bg-gradient-to-r from-transparent via-gold/15 to-transparent" />
+          <div className="absolute bottom-3 left-4 flex gap-1.5">
+            {[0,1,2,3].map(i=><div key={i} className={`w-6 h-3.5 rounded border ${i===0?'border-gold/25 bg-gold/8':'border-white/5 bg-white/2'}`}/>)}
           </div>
-          <div className="w-8 h-8 rounded-full border border-gold/40 bg-gold/10 shadow-[0_0_20px_rgba(201,168,76,0.4)]" />
-        </div>
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1">
-          {[...Array(5)].map((_, i) => (
-            <div key={i} className="w-1 h-1 rounded-full bg-gold/60 shadow-[0_0_4px_#C9A84C]" />
-          ))}
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 w-2 h-10 rounded-full border border-gold/20 bg-gradient-to-b from-gold/10 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-br from-gold/2 to-transparent rounded-xl" />
         </div>
       </div>
     ),
