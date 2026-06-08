@@ -1,7 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 type Service = {
   id: number
@@ -11,12 +10,19 @@ type Service = {
   remise: number
 }
 
-export default function CoutsAdmin({ initialServices }: { initialServices: Service[] }) {
-  const router = useRouter()
-  const [services, setServices] = useState(initialServices)
+export default function CoutsAdmin() {
+  const [services, setServices] = useState<Service[]>([])
+  const [loading, setLoading] = useState(true)
   const [inputs, setInputs] = useState<Record<number, string>>({})
   const [saving, setSaving] = useState<number | null>(null)
   const [saved, setSaved] = useState<number | null>(null)
+
+  useEffect(() => {
+    fetch('/api/services/all')
+      .then((r) => r.json())
+      .then((data) => { setServices(Array.isArray(data) ? data : []); setLoading(false) })
+      .catch(() => setLoading(false))
+  }, [])
 
   const getMarge = (prixBase: number, cout: number) =>
     prixBase > 0 ? (((prixBase - cout) / prixBase) * 100).toFixed(1) : '0.0'
@@ -35,22 +41,30 @@ export default function CoutsAdmin({ initialServices }: { initialServices: Servi
     setSaving(null)
     setSaved(id)
     setTimeout(() => setSaved(null), 2000)
-    router.refresh()
+  }
+
+  if (loading) {
+    return (
+      <div className="p-8">
+        <h1 className="font-cinzel text-2xl font-bold text-white tracking-wider mb-2">Coûts Produits</h1>
+        <p className="text-[#444] text-sm mt-8 text-center">Chargement...</p>
+      </div>
+    )
   }
 
   return (
     <div className="p-8">
       <div className="mb-8">
         <h1 className="font-cinzel text-2xl font-bold text-white tracking-wider">Coûts Produits</h1>
-        <p className="text-[#555] text-sm mt-1">Mettez à jour le coût des produits pour calculer vos marges</p>
+        <p className="text-[#444] text-sm mt-1">Mettez à jour les coûts pour calculer vos marges</p>
       </div>
 
-      <div className="bg-dark-surface border border-dark-border overflow-hidden">
+      <div className="bg-[#07070f] border border-white/5 overflow-hidden rounded">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-dark-border">
-              {['Service', 'Prix client', 'Coût actuel', 'Marge actuelle', 'Nouveau coût', 'Action'].map((h) => (
-                <th key={h} className="text-left py-4 px-5 text-xs text-[#555] uppercase tracking-wider font-normal">
+            <tr className="border-b border-white/5">
+              {['Service', 'Prix client', 'Coût actuel', 'Marge', 'Nouveau coût', 'Action'].map((h) => (
+                <th key={h} className="text-left py-4 px-5 text-xs text-[#444] uppercase tracking-wider font-normal">
                   {h}
                 </th>
               ))}
@@ -61,19 +75,18 @@ export default function CoutsAdmin({ initialServices }: { initialServices: Servi
               const margeActuelle = getMarge(s.prixBase, s.coutProduit)
               const previewCout = inputs[s.id] !== undefined ? parseFloat(inputs[s.id]) : null
               const margePreview = previewCout !== null && !isNaN(previewCout)
-                ? getMarge(s.prixBase, previewCout)
-                : null
+                ? getMarge(s.prixBase, previewCout) : null
 
               return (
-                <tr key={s.id} className="border-b border-dark-border/50 hover:bg-white/2">
+                <tr key={s.id} className="border-b border-white/3 hover:bg-white/2">
                   <td className="py-4 px-5">
-                    <p className="font-cinzel text-white font-semibold">{s.nom}</p>
+                    <p className="font-cinzel text-white font-semibold text-sm">{s.nom}</p>
                   </td>
                   <td className="py-4 px-5">
                     <span className="text-gold font-cinzel font-bold">{s.prixBase}€</span>
                   </td>
                   <td className="py-4 px-5">
-                    <span className="text-[#888]">{s.coutProduit}€</span>
+                    <span className="text-[#666]">{s.coutProduit}€</span>
                   </td>
                   <td className="py-4 px-5">
                     <div className="flex items-center gap-2">
@@ -87,26 +100,24 @@ export default function CoutsAdmin({ initialServices }: { initialServices: Servi
                   </td>
                   <td className="py-4 px-5">
                     <input
-                      type="number"
-                      min="0"
-                      step="0.5"
+                      type="number" min="0" step="0.5"
                       placeholder={String(s.coutProduit)}
                       value={inputs[s.id] ?? ''}
                       onChange={(e) => setInputs((prev) => ({ ...prev, [s.id]: e.target.value }))}
-                      className="w-28 bg-dark-bg border border-dark-border text-white px-3 py-2 text-sm focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+                      className="w-28 bg-[#0a0a14] border border-white/10 text-white px-3 py-2 text-sm focus:border-gold focus:outline-none rounded"
                     />
                   </td>
                   <td className="py-4 px-5">
                     <button
                       onClick={() => handleSave(s.id)}
-                      disabled={saving === s.id || inputs[s.id] === undefined || inputs[s.id] === ''}
-                      className={`px-4 py-2 font-cinzel text-xs font-semibold tracking-wider transition-all ${
+                      disabled={saving === s.id || !inputs[s.id]}
+                      className={`px-4 py-2 font-cinzel text-xs font-semibold tracking-wider transition-all rounded ${
                         saved === s.id
                           ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                          : 'bg-gold text-dark-bg hover:bg-gold-light disabled:opacity-30 disabled:cursor-not-allowed'
+                          : 'bg-gold text-[#02020a] hover:bg-gold-light disabled:opacity-30 disabled:cursor-not-allowed'
                       }`}
                     >
-                      {saving === s.id ? '...' : saved === s.id ? '✓' : 'Mettre à jour'}
+                      {saving === s.id ? '...' : saved === s.id ? '✓ OK' : 'Mettre à jour'}
                     </button>
                   </td>
                 </tr>
@@ -116,10 +127,9 @@ export default function CoutsAdmin({ initialServices }: { initialServices: Servi
         </table>
       </div>
 
-      <div className="mt-6 p-4 border border-dark-border bg-dark-surface/50 text-xs text-[#555]">
-        <p>Formule marge : <span className="text-[#888] font-mono">((Prix client − Coût produit) / Prix client) × 100</span></p>
-        <p className="mt-1">Ces coûts ne sont pas affichés aux clients — ils servent uniquement au calcul de vos bénéfices dans le tableau de bord.</p>
-      </div>
+      <p className="mt-4 text-xs text-[#333]">
+        Formule : <span className="font-mono text-[#444]">((Prix − Coût) / Prix) × 100</span>
+      </p>
     </div>
   )
 }
