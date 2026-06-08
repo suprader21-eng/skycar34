@@ -310,30 +310,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="relative border border-gold/20 p-12">
-            <div className="absolute -top-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-gold to-transparent" />
-            <div className="absolute -bottom-px left-8 right-8 h-px bg-gradient-to-r from-transparent via-gold to-transparent" />
-            <div className="w-2 h-2 rounded-full bg-gold shadow-[0_0_8px_#C9A84C] mx-auto mb-6" />
-            <h2 className="font-cinzel text-3xl font-bold text-white mb-4 tracking-wider">
-              Transformez votre Intérieur
-            </h2>
-            <p className="text-[#666] mb-8 text-sm leading-loose">
-              Réponse sous 24h · Devis gratuit · Sans engagement
-            </p>
-            <Link
-              href="/devis"
-              className="group relative inline-block px-12 py-4 bg-gold text-[#02020a] font-cinzel font-bold text-sm tracking-widest overflow-hidden"
-            >
-              <span className="relative z-10">Demander un Devis</span>
-              <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 skew-x-12" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* CONTACT */}
       <section id="contact" className="relative py-28 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-[#030308]" />
@@ -355,7 +331,7 @@ export default async function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-14">
             {/* Téléphone */}
             <a href="tel:0749498034"
-              className="group flex flex-col items-center gap-4 p-8 border border-white/8 bg-white/2 rounded hover:border-gold/30 hover:bg-gold/3 transition-all">
+              className="group flex flex-col items-center gap-4 p-8 transition-all">
               <div className="w-12 h-12 rounded-full border border-gold/20 flex items-center justify-center group-hover:border-gold/40 transition-colors"
                 style={{ background: 'rgba(201,168,76,0.05)' }}>
                 <svg className="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -370,7 +346,7 @@ export default async function HomePage() {
 
             {/* Instagram */}
             <a href="https://instagram.com/skycar_34" target="_blank" rel="noopener noreferrer"
-              className="group flex flex-col items-center gap-4 p-8 border border-white/8 bg-white/2 rounded hover:border-gold/30 hover:bg-gold/3 transition-all">
+              className="group flex flex-col items-center gap-4 p-8 transition-all">
               <div className="w-12 h-12 rounded-full border border-gold/20 flex items-center justify-center group-hover:border-gold/40 transition-colors"
                 style={{ background: 'rgba(201,168,76,0.05)' }}>
                 <svg className="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 24 24">
@@ -385,7 +361,7 @@ export default async function HomePage() {
 
             {/* TikTok */}
             <a href="https://tiktok.com/@skycar34" target="_blank" rel="noopener noreferrer"
-              className="group flex flex-col items-center gap-4 p-8 border border-white/8 bg-white/2 rounded hover:border-gold/30 hover:bg-gold/3 transition-all">
+              className="group flex flex-col items-center gap-4 p-8 transition-all">
               <div className="w-12 h-12 rounded-full border border-gold/20 flex items-center justify-center group-hover:border-gold/40 transition-colors"
                 style={{ background: 'rgba(201,168,76,0.05)' }}>
                 <svg className="w-5 h-5 text-gold" fill="currentColor" viewBox="0 0 24 24">
@@ -400,8 +376,7 @@ export default async function HomePage() {
           </div>
 
           {/* CTA Devis */}
-          <div className="relative border border-gold/20 bg-gold/3 rounded p-10">
-            <div className="absolute -top-px left-20 right-20 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
+          <div className="pt-4">
             <p className="text-[#555] text-xs uppercase tracking-[0.4em] mb-3">Prêt à transformer votre intérieur ?</p>
             <h3 className="font-cinzel text-2xl text-white mb-6">Demandez votre devis gratuit</h3>
             <Link href="/devis"
