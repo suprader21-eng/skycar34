@@ -14,15 +14,19 @@ const TIERS = [
 ]
 
 const REMISE = 20
+const ALCANTARA_PRIX = 150
 
 export default function CielEtoilePage() {
   const [selected, setSelected] = useState<number | null>(null)
   const [custom, setCustom] = useState(false)
+  const [alcantara, setAlcantara] = useState(false)
 
   const getPrix = (stars: number) => {
     const base = stars // 1€ par étoile
     return base * (1 - REMISE / 100)
   }
+
+  const getTotal = (stars: number) => getPrix(stars) + (alcantara ? ALCANTARA_PRIX : 0)
 
   return (
     <div className="min-h-screen bg-[#02020a]">
@@ -164,18 +168,71 @@ export default function CielEtoilePage() {
             </button>
           </div>
 
+          {/* OPTION ALCANTARA */}
+          <div className="mt-6">
+            <p className="text-xs text-[#555] uppercase tracking-widest mb-3">Option tissu</p>
+            <button
+              onClick={() => setAlcantara(!alcantara)}
+              className={`w-full flex items-center gap-5 p-5 border transition-all duration-300 text-left ${
+                alcantara
+                  ? 'border-gold bg-gold/10 shadow-[0_0_20px_rgba(201,168,76,0.08)]'
+                  : 'border-white/10 bg-[#07070f] hover:border-gold/40'
+              }`}
+            >
+              {/* Toggle */}
+              <div className={`w-12 h-6 rounded-full border-2 relative flex-shrink-0 transition-all duration-300 ${
+                alcantara ? 'bg-gold border-gold' : 'bg-transparent border-[#333]'
+              }`}>
+                <div className={`absolute top-0.5 w-4 h-4 rounded-full transition-all duration-300 ${
+                  alcantara ? 'left-6 bg-[#02020a]' : 'left-0.5 bg-[#444]'
+                }`} />
+              </div>
+
+              {/* Tissu swatch */}
+              <div className="w-10 h-10 rounded flex-shrink-0 border border-white/10 overflow-hidden"
+                style={{ background: 'repeating-linear-gradient(45deg, #1a1a1a 0px, #1a1a1a 2px, #111 2px, #111 4px)' }}
+              />
+
+              {/* Texte */}
+              <div className="flex-1">
+                <p className="font-cinzel text-white font-semibold text-sm">Habillage Alcantara Noir</p>
+                <p className="text-[#666] text-xs mt-1 leading-relaxed">
+                  Remplacement du tissu d&apos;origine par un tissu noir type Alcantara — rendu velours ultra-premium, touché doux et chaleureux.
+                </p>
+              </div>
+
+              {/* Prix */}
+              <div className="text-right flex-shrink-0">
+                <p className="font-cinzel font-bold text-gold text-lg">+{ALCANTARA_PRIX}€</p>
+                <p className="text-xs text-[#555] mt-0.5">option</p>
+              </div>
+            </button>
+          </div>
+
           {/* CTA */}
           {(selected || custom) && (
             <div className="mt-8 text-center">
               <div className="inline-block border border-gold/20 bg-gold/5 px-8 py-5">
                 {selected && (
-                  <p className="text-[#888] text-sm mb-3">
-                    Pack sélectionné : <span className="text-white font-cinzel font-semibold">{TIERS.find(t => t.stars === selected)?.label} — {selected} étoiles</span>
-                    <span className="text-gold font-cinzel font-bold ml-3">{getPrix(selected).toFixed(0)}€</span>
-                  </p>
+                  <div className="text-sm mb-4 space-y-1">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[#888]">Pack {TIERS.find(t => t.stars === selected)?.label} — {selected} étoiles</span>
+                      <span className="text-gold font-cinzel font-semibold">{getPrix(selected).toFixed(0)}€</span>
+                    </div>
+                    {alcantara && (
+                      <div className="flex justify-between items-center">
+                        <span className="text-[#888]">Habillage Alcantara Noir</span>
+                        <span className="text-gold font-cinzel font-semibold">+{ALCANTARA_PRIX}€</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between items-center pt-2 border-t border-gold/20">
+                      <span className="text-white font-cinzel font-semibold">Total</span>
+                      <span className="text-gold font-cinzel font-bold text-xl">{getTotal(selected).toFixed(0)}€</span>
+                    </div>
+                  </div>
                 )}
                 <Link
-                  href={`/devis?service=ciel-etoile${selected ? `&etoiles=${selected}` : ''}`}
+                  href={`/devis?service=ciel-etoile${selected ? `&etoiles=${selected}` : ''}${alcantara ? '&alcantara=1' : ''}`}
                   className="inline-block px-10 py-4 bg-gold text-[#02020a] font-cinzel font-bold text-sm tracking-widest hover:bg-gold-light transition-all"
                 >
                   {custom ? 'Demander un Devis Personnalisé' : 'Commander ce Pack →'}

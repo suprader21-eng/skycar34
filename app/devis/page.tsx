@@ -57,9 +57,12 @@ function DevisForm() {
   const [devisId, setDevisId] = useState<number | null>(null)
 
   // Mode ciel étoilé personnalisé
+  const alcantara = searchParams.get('alcantara') === '1'
+  const ALCANTARA_PRIX = 150
+
   const isCielEtoile = serviceCiel && etoiles > 0
   const prixCielBase = etoiles // 1€/étoile
-  const prixCielFinal = Math.round(prixCielBase * 0.8) // -20%
+  const prixCielFinal = Math.round(prixCielBase * 0.8) + (alcantara ? ALCANTARA_PRIX : 0) // -20% + alcantara
   const tierName = TIERS_ETOILES[etoiles] ?? 'Personnalisé'
 
   useEffect(() => {
@@ -241,6 +244,17 @@ function DevisForm() {
                         <p className="text-xs text-green-400">-20% offre de lancement</p>
                       </div>
                     </div>
+                    {alcantara && (
+                      <div className="flex items-center justify-between mt-3 pt-3 border-t border-gold/20">
+                        <div className="flex items-center gap-2">
+                          <div className="w-5 h-5 rounded border border-white/10 flex-shrink-0"
+                            style={{ background: 'repeating-linear-gradient(45deg,#1a1a1a 0px,#1a1a1a 2px,#111 2px,#111 4px)' }}
+                          />
+                          <span className="text-[#888] text-xs">Habillage Alcantara Noir</span>
+                        </div>
+                        <span className="text-gold text-xs font-cinzel font-semibold">+{ALCANTARA_PRIX}€</span>
+                      </div>
+                    )}
                     {/* Mini étoiles */}
                     <div className="flex flex-wrap gap-0.5 mt-3 h-5 overflow-hidden opacity-50">
                       {[...Array(Math.floor(etoiles / 15))].map((_, i) => (
@@ -318,10 +332,18 @@ function DevisForm() {
                   <div className="border-t border-dark-border pt-4">
                     <p className="text-[#555] text-xs uppercase tracking-wider mb-3">Services</p>
                     {isCielEtoile && (
-                      <div className="flex justify-between items-center text-sm py-1">
-                        <span className="text-white">Ciel Étoilé — Pack {tierName} ({etoiles} étoiles)</span>
-                        <span className="text-gold font-cinzel font-semibold">{prixCielFinal}€</span>
-                      </div>
+                      <>
+                        <div className="flex justify-between items-center text-sm py-1">
+                          <span className="text-white">Ciel Étoilé — Pack {tierName} ({etoiles} étoiles)</span>
+                          <span className="text-gold font-cinzel font-semibold">{Math.round(etoiles * 0.8)}€</span>
+                        </div>
+                        {alcantara && (
+                          <div className="flex justify-between items-center text-sm py-1">
+                            <span className="text-white">Habillage Alcantara Noir</span>
+                            <span className="text-gold font-cinzel font-semibold">+{ALCANTARA_PRIX}€</span>
+                          </div>
+                        )}
+                      </>
                     )}
                     {selectedServices.map((id) => {
                       const s = services.find((sv) => sv.id === id)!
