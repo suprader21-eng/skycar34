@@ -321,10 +321,11 @@ export default async function HomePage() {
             </span>
             <p className="text-xs text-[#333] mt-1 tracking-widest uppercase">Rénovation Intérieure Automobile</p>
           </div>
-          <div className="flex items-center gap-6">
-            <a href="https://instagram.com/Skycar34" target="_blank" rel="noopener noreferrer" className="text-[#444] hover:text-gold transition-colors text-sm">Instagram</a>
-            <a href="https://tiktok.com/@Skycar34" target="_blank" rel="noopener noreferrer" className="text-[#444] hover:text-gold transition-colors text-sm">TikTok</a>
+          <div className="flex items-center gap-6 flex-wrap justify-center">
+            <a href="https://instagram.com/skycar_34" target="_blank" rel="noopener noreferrer" className="text-[#444] hover:text-gold transition-colors text-sm">@skycar_34</a>
+            <a href="https://tiktok.com/@skycar34" target="_blank" rel="noopener noreferrer" className="text-[#444] hover:text-gold transition-colors text-sm">TikTok @skycar34</a>
             <a href="mailto:skycar34@gmail.com" className="text-[#444] hover:text-gold transition-colors text-sm">skycar34@gmail.com</a>
+            <a href="tel:0749498034" className="text-[#444] hover:text-gold transition-colors text-sm">07 49 49 80 34</a>
           </div>
           <p className="text-xs text-[#222]">© {new Date().getFullYear()} Skycar34</p>
         </div>
