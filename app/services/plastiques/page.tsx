@@ -111,8 +111,8 @@ export default function PlastiquesPage() {
             <div className="absolute -bottom-px left-16 right-16 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
             <p className="text-[#444] text-xs uppercase tracking-[0.3em] mb-3">Tarif tout inclus</p>
             <div className="flex items-baseline justify-center gap-4 mb-1">
-              <span className="font-cinzel text-6xl font-bold text-gold">40€</span>
-              <span className="text-[#333] text-2xl line-through font-cinzel">50€</span>
+              <span className="font-cinzel text-6xl font-bold text-gold">80€</span>
+              <span className="text-[#333] text-2xl line-through font-cinzel">100€</span>
             </div>
             <p className="text-green-400 text-xs mb-1">Offre de lancement −20%</p>
             <p className="text-[#333] text-xs mb-8">Nettoyage · Nano céramique · Protection UV</p>

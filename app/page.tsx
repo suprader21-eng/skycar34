@@ -92,6 +92,31 @@ const servicePages: Record<string, { href: string; visual: React.ReactNode; tagl
       </div>
     ),
   },
+  'Installation LED Complète': {
+    href: '/services/led',
+    tagline: 'Footwell • Sièges • Console',
+    visual: (
+      <div className="relative w-full h-full bg-[#02020a] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(201,168,76,0.06)_0%,_transparent_60%)]" />
+        {/* Habitacle simplifié avec LEDs */}
+        <div className="relative w-44 h-28 flex flex-col gap-2">
+          {/* Bandeaux footwell */}
+          <div className="absolute bottom-0 left-0 right-0 h-1.5 rounded-full bg-gradient-to-r from-gold/60 via-gold/80 to-gold/60 shadow-[0_0_8px_rgba(201,168,76,0.6)]" />
+          {/* Bandeau console */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-1 rounded-full bg-gold/50 shadow-[0_0_6px_rgba(201,168,76,0.5)]" />
+          {/* Contour siège gauche */}
+          <div className="absolute left-2 top-3 bottom-4 w-0.5 rounded-full bg-gradient-to-b from-transparent via-gold/50 to-transparent shadow-[0_0_4px_rgba(201,168,76,0.4)]" />
+          {/* Contour siège droit */}
+          <div className="absolute right-2 top-3 bottom-4 w-0.5 rounded-full bg-gradient-to-b from-transparent via-gold/50 to-transparent shadow-[0_0_4px_rgba(201,168,76,0.4)]" />
+          {/* Points lumineux */}
+          {[[20,30],[50,15],[80,30],[20,70],[50,80],[80,70]].map(([l,t],i)=>(
+            <div key={i} className="absolute w-1 h-1 rounded-full bg-gold shadow-[0_0_6px_#C9A84C]"
+              style={{ left:`${l}%`, top:`${t}%` }} />
+          ))}
+        </div>
+      </div>
+    ),
+  },
   'Rénovation plastiques intérieurs': {
     href: '/services/plastiques',
     tagline: 'Nano céramique • Protection UV',
@@ -324,7 +349,6 @@ export default async function HomePage() {
           <div className="flex items-center gap-6 flex-wrap justify-center">
             <a href="https://instagram.com/skycar_34" target="_blank" rel="noopener noreferrer" className="text-[#444] hover:text-gold transition-colors text-sm">@skycar_34</a>
             <a href="https://tiktok.com/@skycar34" target="_blank" rel="noopener noreferrer" className="text-[#444] hover:text-gold transition-colors text-sm">TikTok @skycar34</a>
-            <a href="mailto:skycar34@gmail.com" className="text-[#444] hover:text-gold transition-colors text-sm">skycar34@gmail.com</a>
             <a href="tel:0749498034" className="text-[#444] hover:text-gold transition-colors text-sm">07 49 49 80 34</a>
           </div>
           <p className="text-xs text-[#222]">© {new Date().getFullYear()} Skycar34</p>
