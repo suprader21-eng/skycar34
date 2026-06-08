@@ -7,8 +7,8 @@ async function getServices() {
   return prisma.service.findMany({ where: { actif: true }, orderBy: { id: 'asc' } })
 }
 
-const servicePages: Record<string, { href: string; visual: React.ReactNode; tagline: string }> = {
-  'Ciel étoilé': {
+const servicePages: Record<number, { href: string; visual: React.ReactNode; tagline: string }> = {
+  1: {
     href: '/services/ciel-etoile',
     tagline: 'De 200 à 1000 étoiles LED',
     visual: (
@@ -44,7 +44,7 @@ const servicePages: Record<string, { href: string; visual: React.ReactNode; tagl
       </div>
     ),
   },
-  'Intégration multimédia': {
+  2: {
     href: '/services/multimedia',
     tagline: 'Écran HD • CarPlay & Android',
     visual: (
@@ -70,7 +70,7 @@ const servicePages: Record<string, { href: string; visual: React.ReactNode; tagl
       </div>
     ),
   },
-  'Rénovation phares': {
+  3: {
     href: '/services/phares',
     tagline: 'Nano UV 9H • Cristallin',
     visual: (
@@ -92,7 +92,7 @@ const servicePages: Record<string, { href: string; visual: React.ReactNode; tagl
       </div>
     ),
   },
-  'Installation LED Complète': {
+  6: {
     href: '/services/led',
     tagline: 'Footwell • Sièges • Console',
     visual: (
@@ -117,7 +117,7 @@ const servicePages: Record<string, { href: string; visual: React.ReactNode; tagl
       </div>
     ),
   },
-  'Rénovation plastiques intérieurs': {
+  4: {
     href: '/services/plastiques',
     tagline: 'Nano céramique • Protection UV',
     visual: (
@@ -216,10 +216,7 @@ export default async function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service) => {
-              const meta = Object.entries(servicePages).find(([key]) =>
-                service.nom.toLowerCase().includes(key.toLowerCase().slice(0, 6))
-              )
-              const page = meta ? meta[1] : null
+              const page = servicePages[service.id] ?? null
               const prixFinal = service.remise > 0 ? service.prixBase * (1 - service.remise / 100) : service.prixBase
 
               return (
