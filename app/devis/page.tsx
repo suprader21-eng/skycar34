@@ -76,12 +76,14 @@ function DevisForm() {
 
   const getPrix = (s: Service) => s.remise > 0 ? s.prixBase * (1 - s.remise / 100) : s.prixBase
 
+  const extraServices = selectedServices.reduce((sum, id) => {
+    const s = services.find((sv) => sv.id === id)
+    return sum + (s ? getPrix(s) : 0)
+  }, 0)
+
   const total = isCielEtoile
-    ? prixCielFinal
-    : selectedServices.reduce((sum, id) => {
-        const s = services.find((sv) => sv.id === id)
-        return sum + (s ? getPrix(s) : 0)
-      }, 0)
+    ? prixCielFinal + extraServices
+    : extraServices
 
   const validateStep1 = () => {
     const e: Partial<FormData> = {}
