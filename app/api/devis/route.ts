@@ -16,31 +16,59 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
-  const { prenom, nom, email, telephone, marqueVoiture, modeleVoiture, message, serviceIds } = body
+  const {
+    prenom, nom, email, telephone,
+    marqueVoiture, modeleVoiture, message,
+    serviceIds,
+    cielEtoile, // { etoiles, pack, prixFinal, alcantara }
+  } = body
 
   if (!prenom || !nom || !email || !telephone || !marqueVoiture || !modeleVoiture) {
     return NextResponse.json({ error: 'Champs obligatoires manquants' }, { status: 400 })
   }
-  if (!serviceIds || serviceIds.length === 0) {
+
+  const hasCielEtoile = cielEtoile && cielEtoile.etoiles > 0
+  const hasServices = serviceIds && serviceIds.length > 0
+
+  if (!hasCielEtoile && !hasServices) {
     return NextResponse.json({ error: 'Aucun service sélectionné' }, { status: 400 })
   }
 
-  const services = await prisma.service.findMany({
-    where: { id: { in: serviceIds }, actif: true },
-  })
+  const items: { serviceId: number; quantite: number; prixUnit: number }[] = []
+  let totalHT = 0
 
-  if (services.length === 0) {
-    return NextResponse.json({ error: 'Services introuvables' }, { status: 400 })
+  // Ciel étoilé custom
+  if (hasCielEtoile) {
+    const prixEtoiles = Math.round(cielEtoile.etoiles * 0.8) // -20%
+    const prixAlcantara = cielEtoile.alcantara ? 150 : 0
+    const prixTotal = prixEtoiles + prixAlcantara
+
+    items.push({
+      serviceId: 1, // service ciel étoilé en DB
+      quantite: 1,
+      prixUnit: prixTotal,
+    })
+    totalHT += prixTotal
   }
 
-  const items = services.map((s) => ({
-    serviceId: s.id,
-    quantite: 1,
-    prixUnit: s.remise > 0 ? s.prixBase * (1 - s.remise / 100) : s.prixBase,
-  }))
+  // Services supplémentaires
+  if (hasServices) {
+    const services = await prisma.service.findMany({
+      where: { id: { in: serviceIds }, actif: true },
+    })
+    for (const s of services) {
+      const prix = s.remise > 0 ? s.prixBase * (1 - s.remise / 100) : s.prixBase
+      items.push({ serviceId: s.id, quantite: 1, prixUnit: prix })
+      totalHT += prix
+    }
+  }
 
-  const totalHT = items.reduce((sum, i) => sum + i.prixUnit, 0)
-  const totalFinal = totalHT
+  // Construction du message final
+  let messageFinal = message || ''
+  if (hasCielEtoile) {
+    const detail = `[Ciel Étoilé — Pack ${cielEtoile.pack} (${cielEtoile.etoiles} étoiles)${cielEtoile.alcantara ? ' + Alcantara Noir' : ''} — ${Math.round(cielEtoile.etoiles * 0.8) + (cielEtoile.alcantara ? 150 : 0)}€ (offre -20%)]`
+    messageFinal = messageFinal ? `${detail}\n${messageFinal}` : detail
+  }
 
   const devis = await prisma.devis.create({
     data: {
@@ -50,13 +78,11 @@ export async function POST(req: NextRequest) {
       telephone,
       marqueVoiture,
       modeleVoiture,
-      message: message || null,
+      message: messageFinal || null,
       totalHT,
       remiseAppliquee: 0,
-      totalFinal,
-      items: {
-        create: items,
-      },
+      totalFinal: totalHT,
+      items: { create: items },
     },
   })
 

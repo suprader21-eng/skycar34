@@ -109,9 +109,8 @@ function DevisForm() {
       const body = isCielEtoile
         ? {
             ...form,
-            serviceIds: [],
-            cielEtoile: { etoiles, pack: tierName, prixFinal: prixCielFinal },
-            message: `Pack Ciel Étoilé — ${tierName} (${etoiles} étoiles) — ${prixCielFinal}€ (offre -20%)${form.message ? '\n' + form.message : ''}`,
+            serviceIds: selectedServices,
+            cielEtoile: { etoiles, pack: tierName, alcantara, prixFinal: prixCielFinal },
           }
         : { ...form, serviceIds: selectedServices }
 
