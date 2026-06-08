@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Service {
+  id          Int         @id @default(autoincrement())
+  nom         String
+  description String
+  prixBase    Float
+  coutProduit Float
+  remise      Float       @default(0)
+  actif       Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  devisItems  DevisItem[]
+}
+
+model Devis {
+  id              Int         @id @default(autoincrement())
+  nom             String
+  prenom          String
+  email           String
+  telephone       String
+  marqueVoiture   String
+  modeleVoiture   String
+  message         String?
+  statut          String      @default("en_attente")
+  totalHT         Float
+  remiseAppliquee Float       @default(0)
+  totalFinal      Float
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  items           DevisItem[]
+}
+
+model DevisItem {
+  id        Int     @id @default(autoincrement())
+  devis     Devis   @relation(fields: [devisId], references: [id])
+  devisId   Int
+  service   Service @relation(fields: [serviceId], references: [id])
+  serviceId Int
+  quantite  Int     @default(1)
+  prixUnit  Float
+}
+
+model Admin {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+}
