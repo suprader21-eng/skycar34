@@ -9,52 +9,42 @@ export default function PharesPage() {
       {/* HERO */}
       <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-[#040402]">
-          {/* Deux faisceaux lumineux */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(201,168,76,0.05)_0%,_transparent_60%)]" />
+
+          {/* Faisceaux lumineux via dégradés */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             {/* Faisceau gauche */}
-            <div className="absolute" style={{
-              left: '-160px', top: '-8px',
-              width: '0', height: '0',
-              borderTop: '80px solid transparent',
-              borderBottom: '80px solid transparent',
-              borderRight: '380px solid rgba(201,168,76,0.04)',
-              filter: 'blur(12px)',
-              transform: 'rotate(180deg)',
-            }} />
+            <div className="absolute w-96 h-48 -translate-y-1/2 right-12 origin-right rotate-[-8deg]"
+              style={{ background: 'linear-gradient(to left, rgba(201,168,76,0.12), transparent)', filter: 'blur(16px)' }} />
+            <div className="absolute w-96 h-48 -translate-y-1/2 right-12 origin-right rotate-[8deg]"
+              style={{ background: 'linear-gradient(to left, rgba(201,168,76,0.08), transparent)', filter: 'blur(20px)' }} />
             {/* Faisceau droit */}
-            <div className="absolute" style={{
-              right: '-160px', top: '-8px',
-              width: '0', height: '0',
-              borderTop: '80px solid transparent',
-              borderBottom: '80px solid transparent',
-              borderLeft: '380px solid rgba(201,168,76,0.04)',
-              filter: 'blur(12px)',
-            }} />
+            <div className="absolute w-96 h-48 -translate-y-1/2 left-12 origin-left rotate-[8deg]"
+              style={{ background: 'linear-gradient(to right, rgba(201,168,76,0.12), transparent)', filter: 'blur(16px)' }} />
+            <div className="absolute w-96 h-48 -translate-y-1/2 left-12 origin-left rotate-[-8deg]"
+              style={{ background: 'linear-gradient(to right, rgba(201,168,76,0.08), transparent)', filter: 'blur(20px)' }} />
           </div>
 
           {/* Halos des phares */}
-          <div className="absolute left-1/2 top-1/2 -translate-y-1/2 flex gap-40 -translate-x-1/2">
+          <div className="absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 flex gap-40">
             {[0, 1].map((i) => (
               <div key={i} className="relative flex items-center justify-center">
-                {/* Lueur externe */}
-                <div className="absolute w-28 h-28 rounded-full bg-[radial-gradient(circle,_rgba(201,168,76,0.15)_0%,_transparent_70%)]" />
-                {/* Anneau externe */}
-                <div className="w-16 h-16 rounded-full border border-gold/20 flex items-center justify-center shadow-[0_0_40px_rgba(201,168,76,0.15)]">
-                  {/* Anneau interne */}
-                  <div className="w-10 h-10 rounded-full border border-gold/40 flex items-center justify-center bg-gold/5">
-                    {/* LED centrale */}
-                    <div className="w-4 h-4 rounded-full bg-gold shadow-[0_0_20px_rgba(201,168,76,1),0_0_40px_rgba(201,168,76,0.6),0_0_80px_rgba(201,168,76,0.3)]" />
+                <div className="absolute w-32 h-32 rounded-full"
+                  style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.18) 0%, transparent 70%)' }} />
+                <div className="w-16 h-16 rounded-full border border-[rgba(201,168,76,0.2)] flex items-center justify-center"
+                  style={{ boxShadow: '0 0 40px rgba(201,168,76,0.15)' }}>
+                  <div className="w-10 h-10 rounded-full border border-[rgba(201,168,76,0.4)] flex items-center justify-center"
+                    style={{ background: 'rgba(201,168,76,0.05)' }}>
+                    <div className="w-4 h-4 rounded-full"
+                      style={{ background: '#C9A84C', boxShadow: '0 0 20px #C9A84C, 0 0 40px rgba(201,168,76,0.6), 0 0 80px rgba(201,168,76,0.3)' }} />
                   </div>
                 </div>
-                {/* Reflet sol */}
-                <div className="absolute top-14 w-8 h-2 bg-gold/10 rounded-full blur-sm" />
               </div>
             ))}
           </div>
 
-          {/* Ligne du capot stylisée */}
-          <div className="absolute bottom-1/3 left-1/2 -translate-x-1/2 w-80 h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(201,168,76,0.04)_0%,_transparent_55%)]" />
+          <div className="absolute bottom-1/3 left-1/2 -translate-x-1/2 w-80 h-px"
+            style={{ background: 'linear-gradient(to right, transparent, rgba(201,168,76,0.2), transparent)' }} />
         </div>
         <div className="absolute bottom-0 inset-x-0 h-56 bg-gradient-to-t from-[#02020a] to-transparent" />
 
