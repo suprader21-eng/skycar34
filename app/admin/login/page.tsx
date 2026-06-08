@@ -15,16 +15,33 @@ export default function AdminLoginPage() {
     e.preventDefault()
     setError('')
     setLoading(true)
-    const res = await signIn('credentials', {
-      email,
-      password,
-      redirect: false,
-    })
-    setLoading(false)
-    if (res?.ok) {
-      router.push('/admin/dashboard')
-    } else {
-      setError('Email ou mot de passe incorrect.')
+
+    try {
+      const res = await signIn('credentials', {
+        email: email.trim(),
+        password,
+        redirect: false,
+        callbackUrl: '/admin/dashboard',
+      })
+
+      if (!res) {
+        setError('Erreur de connexion. Réessayez.')
+        return
+      }
+
+      if (res.error) {
+        setError('Email ou mot de passe incorrect.')
+        return
+      }
+
+      if (res.ok) {
+        router.push('/admin/dashboard')
+        router.refresh()
+      }
+    } catch {
+      setError('Erreur réseau. Vérifiez votre connexion.')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -45,10 +62,11 @@ export default function AdminLoginPage() {
               <input
                 type="email"
                 required
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full bg-dark-bg border border-dark-border text-white placeholder-[#444] px-4 py-3 text-sm focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition-colors"
-                placeholder="admin@skycar34.fr"
+                placeholder="suprader21@gmail.com"
               />
             </div>
             <div>
@@ -56,6 +74,7 @@ export default function AdminLoginPage() {
               <input
                 type="password"
                 required
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full bg-dark-bg border border-dark-border text-white placeholder-[#444] px-4 py-3 text-sm focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold transition-colors"
@@ -70,9 +89,9 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-gold text-dark-bg font-cinzel font-semibold text-sm tracking-widest hover:bg-gold-light transition-all disabled:opacity-50"
+              className="w-full py-3 bg-gold text-dark-bg font-cinzel font-semibold text-sm tracking-widest hover:bg-gold-light transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Connexion...' : 'Se Connecter'}
+              {loading ? 'Connexion en cours...' : 'Se Connecter'}
             </button>
           </form>
         </div>
